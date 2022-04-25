@@ -55,8 +55,9 @@ async def tictactoe(interaction: Interaction, challenger:nextcord.Member="AI"):
     author_name = interaction.user.nick if interaction.user.nick else interaction.user.name # str
     challenger_name = (challenger.nick if challenger.nick else challenger.name) if not type(challenger) is str else "AI" # str
 
-    await interaction.channel.create_thread(name=author_name+" vs "+challenger_name,auto_archive_duration )
-    await interaction.response.send_message("you challenged "+(challenger_name),ephemeral=True,view=TictactoeButtons())
+    msg = await interaction.response.send_message("you challenged "+(challenger_name),ephemeral=False,view=TictactoeButtons())
+    print(msg)
+    await interaction.channel.create_thread(name=author_name+" vs "+challenger_name,auto_archive_duration=60,message=msg )
     return
 
 client.run(os.getenv("TOKEN"))
