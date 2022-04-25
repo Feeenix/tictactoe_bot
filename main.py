@@ -13,6 +13,7 @@ from nextcord import Interaction, SlashOption, ChannelType
 from nextcord.ext import commands
 from nextcord.abc import GuildChannel
 import random
+import ccard
 
 from cogs.buttons import TictactoeButtons
 
@@ -39,7 +40,7 @@ async def test(interaction: Interaction,  attachment:nextcord.Attachment=None,ar
 
 @client.slash_command(description="your very own credit card number generator!",guild_ids=testing_server_ids,force_global=True)
 async def random_credit_card(interaction: Interaction):
-    number = str(random.randint(1000000000000000,9999999999999999))
+    number = ccard.visa()
     await interaction.response.send_message("Your random credit card number is: "+" ".join([ number[index:index+4] for index,substring in enumerate(number) if index%4==0])+".\n"+
     "CVV: "+str(random.randint(100,999))+"\n"+
     "Expiration date: "+str(random.randint(1,12))+"/"+str(random.randint(22,31))+"\n"+
