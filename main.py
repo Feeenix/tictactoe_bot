@@ -80,12 +80,20 @@ class tic_tac_toe_game:
         return embed
     async def send_board_buttons(self):
         buttons = TictactoeButtons(self.board)
+        
         await self.thread_channel.send(embed=self.make_embed(),view=buttons)
 
 class TictactoeButtons(nextcord.ui.View):
     def __init__(self, board:list=[["blue_square","blue_square","blue_square"],["blue_square","blue_square","blue_square"],["blue_square","blue_square","blue_square"],], timeout=180):
+        self.board = board
         super().__init__(timeout=timeout)
-    @nextcord.ui.button(label="Button1",style=nextcord.ButtonStyle.gray)
+    # def get_buttons(self):
+    #     buttons = []
+    #     for row in self.board:
+    #         for cell in row:
+    #             buttons.append(nextcord.ui.Button(text=":"+cell+":",action="click",payload={"cell":cell}))
+    #     return buttons
+    @nextcord.ui.button(label=":o:",style=nextcord.ButtonStyle.gray)
     async def gray1_button(self,button:nextcord.ui.Button,interaction:Interaction):
         await interaction.response.edit_message(content=f"This is an edited button response!1")
     @nextcord.ui.button(label="Button2",style=nextcord.ButtonStyle.danger)
