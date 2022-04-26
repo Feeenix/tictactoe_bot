@@ -15,7 +15,7 @@ from nextcord.abc import GuildChannel
 import random
 import ccard
 
-from cogs.buttons import TictactoeButtons
+# from cogs.buttons import TictactoeButtons
 
 # intents = nextcord.Intents().all()
 client = commands.Bot(command_prefix="$", )
@@ -81,6 +81,19 @@ class tic_tac_toe_game:
     async def send_board_buttons(self):
         buttons = TictactoeButtons(self.board)
         await self.thread_channel.send(embed=self.make_embed(),view=buttons)
+
+class TictactoeButtons(nextcord.ui.View):
+    def __init__(self, board:list=[[" "," "," "],[" "," "," "],[" "," "," "],], timeout=180):
+        super().__init__(timeout=timeout)
+    @nextcord.ui.button(label="Button1",style=nextcord.ButtonStyle.gray)
+    async def gray1_button(self,button:nextcord.ui.Button,interaction:Interaction):
+        await interaction.response.edit_message(content=f"This is an edited button response!1")
+    @nextcord.ui.button(label="Button2",style=nextcord.ButtonStyle.danger)
+    async def gray2_button(self,button:nextcord.ui.Button,interaction:Interaction):
+        await interaction.response.edit_message(content=f"This is an edited button response!2")
+    @nextcord.ui.button(label="Button3",style=nextcord.ButtonStyle.success)
+    async def gray3_button(self,button:nextcord.ui.Button,interaction:Interaction):
+        await interaction.response.edit_message(content=f"This is an edited button response!3")
 
 
 @client.slash_command(description="tic tac toe",guild_ids=testing_server_ids,force_global=True)
