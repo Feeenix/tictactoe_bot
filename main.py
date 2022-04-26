@@ -53,14 +53,50 @@ async def random_credit_card(interaction: Interaction):
     return
 
 
+
+
+class tic_tac_toe_game:
+    
+    def __init__(self,thread_channel,author,challenged,author_name,challenged_name):
+        self.thread_channel = thread_channel
+        self.board = [
+            [" "," "," "],
+            [" "," "," "],
+            [" "," "," "]
+        ]
+
+        self.author = author
+        self.challenged = challenged
+        self.name_author = author_name
+        self.name_challenged = challenged_name
+
+        self.turn = "x"
+        self.winner = None
+        self.draw = False
+        self.game_over = False
+        self.game_started = False
+        self.game_ended = False
+    
+
+    def make_embed(self):
+        embed = nextcord.Embed(title="Tic Tac Toe",description=f"Game of {self.author} vs. {self.challenged}\n"+"\n".join([ "".join([f":{cell}:" for cell in row ]) for row in self.board ]))
+        return embed
+    async def send_board_buttons(self):
+        buttons = TictactoeButtons(self.board)
+        await self.thread_channel.send(embed=self.make_embed(),view=buttons.get_board_buttons())
+
+
 @client.slash_command(description="tic tac toe",guild_ids=testing_server_ids,force_global=True)
 async def tictactoe(interaction: Interaction, challenger:nextcord.Member="AI"):
     print(interaction)
     author_name = interaction.user.nick if interaction.user.nick else interaction.user.name # str
     challenger_name = (challenger.nick if challenger.nick else challenger.name) if not type(challenger) is str else "AI" # str
 
-    await interaction.channel.create_thread(name=author_name+" vs "+challenger_name,auto_archive_duration )
-    await interaction.response.send_message("you challenged "+(challenger_name),ephemeral=True,view=TictactoeButtons())
+    await interaction.response.send_message("you challenged "+(challenger_name),ephemeral=False,view=TictactoeButtons())
+    
+    thread = await interaction.channel.create_thread(name=author_name+" vs "+challenger_name,auto_archive_duration=1440,type=ChannelType(11) )
+    game = tic_tac_toe_game(thread,interaction.user,challenger,author_name,challenger_name)
+    await game.send_board_buttons()
     return
 
 client.run(os.getenv("TOKEN"))

@@ -1,8 +1,11 @@
 import nextcord
 from nextcord import Interaction, SlashOption, ChannelType
 
+# class TictactoeButtons:
+#     def __init__(self, ):
+#         pass
 class TictactoeButtons(nextcord.ui.View):
-    def __init__(self, *, timeout=180):
+    def __init__(self, board:list=[[" "," "," "],[" "," "," "],[" "," "," "],], timeout=180):
         super().__init__(timeout=timeout)
     @nextcord.ui.button(label="Button1",style=nextcord.ButtonStyle.gray)
     async def gray1_button(self,button:nextcord.ui.Button,interaction:Interaction):
