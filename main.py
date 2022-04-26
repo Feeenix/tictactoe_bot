@@ -80,7 +80,7 @@ class tic_tac_toe_game:
         return embed
     async def send_board_buttons(self):
         buttons = TictactoeButtons(self.board)
-        await self.thread_channel.send(embed=self.make_embed(),view=buttons.get_board_buttons())
+        await self.thread_channel.send(embed=self.make_embed(),view=buttons)
 
 
 @client.slash_command(description="tic tac toe",guild_ids=testing_server_ids,force_global=True)
