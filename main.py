@@ -1,7 +1,8 @@
 import os
 
+from faker import Faker
 
-
+import string
 import sys
 import time
 import datetime
@@ -23,6 +24,7 @@ client = commands.Bot(command_prefix="$", )
 # 
 
 testing_server_ids = [814404883255132181,874954049517154315]
+faker = Faker()
 
 @client.event  
 async def on_ready():
@@ -41,11 +43,12 @@ async def test(interaction: Interaction,  attachment:nextcord.Attachment=None,ar
 @client.slash_command(description="your very own credit card number generator!",guild_ids=testing_server_ids,force_global=True)
 async def random_credit_card(interaction: Interaction):
     number = ccard.visa()
+    name = faker.name()
     await interaction.response.send_message("Your random credit card number is: "+" ".join([ number[index:index+4] for index,substring in enumerate(number) if index%4==0])+".\n"+
     "CVV: "+str(random.randint(100,999))+"\n"+
     "Expiration date: "+str(random.randint(1,12))+"/"+str(random.randint(22,31))+"\n"+
     "Name on card: "+"".join([ random.choice(["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]) for i in range(0,10)])+
-    " "+"".join([ random.choice(["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]) for i in range(0,10)]) +"\n"
+    " "+ name +"\n"
     )
     return
 
