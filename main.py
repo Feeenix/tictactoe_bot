@@ -57,9 +57,9 @@ class tic_tac_toe_game:
     def __init__(self,thread_channel,author,challenged,author_name,challenged_name):
         self.thread_channel = thread_channel
         self.board = [
-            [" "," "," "],
-            [" "," "," "],
-            [" "," "," "]
+            ["blue_square","blue_square","blue_square"],
+            ["blue_square","blue_square","blue_square"],
+            ["blue_square","blue_square","blue_square"],
         ]
 
         self.author = author
@@ -83,7 +83,7 @@ class tic_tac_toe_game:
         await self.thread_channel.send(embed=self.make_embed(),view=buttons)
 
 class TictactoeButtons(nextcord.ui.View):
-    def __init__(self, board:list=[[" "," "," "],[" "," "," "],[" "," "," "],], timeout=180):
+    def __init__(self, board:list=[["blue_square","blue_square","blue_square"],["blue_square","blue_square","blue_square"],["blue_square","blue_square","blue_square"],], timeout=180):
         super().__init__(timeout=timeout)
     @nextcord.ui.button(label="Button1",style=nextcord.ButtonStyle.gray)
     async def gray1_button(self,button:nextcord.ui.Button,interaction:Interaction):
